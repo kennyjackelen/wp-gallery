@@ -1,0 +1,107 @@
+body
+{
+	padding-top: 40px;
+	background: #232927;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	color: #DDDDDD;
+}
+
+#blog-title,
+#blog-title a
+{
+	color: #E16734;
+	font-size: 1.75em;
+	line-height: 1.25;
+	font-weight: bold;
+	text-align: center;
+}
+
+#blog-description
+{
+	line-height: 1.25;
+	font-size: 1.25em;
+	text-align: center;
+}
+
+.posts
+{
+	list-style-type: none;
+}
+
+.post
+{
+	background: #222222;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.post-title,.post-date
+{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	line-height: 1.25;
+}
+
+.post-title,
+.post-title a
+{
+	color: #E16734;
+	font-weight: bold;
+	font-size: 1em;
+	margin-top: 10px;
+}
+
+.post-date
+{
+	font-size: 0.75em;
+	margin-bottom: 10px;
+}
+
+.nav-tabs .dropdown-toggle .caret,
+.nav-pills .dropdown-toggle .caret {
+  border-top-color: #626262;
+  border-bottom-color: #626262;
+}
+.dropdown-menu li > a:hover,
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover {
+  background-color: #626262;
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px)
+{
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px)
+{
+	.post-title
+	{
+		font-size: 1.5em;
+		margin-top: 20px;
+	}
+	.post-date
+	{
+		font-size: 0.75em;
+		margin-bottom: 20px;
+	}
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px)
+{
+	.post-title
+	{
+		font-size: 2em;
+		margin-top: 30px;
+	}
+	.post-date
+	{
+		font-size: 1em;
+		margin-bottom: 30px;
+	}
+}
+

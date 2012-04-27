@@ -1,0 +1,20 @@
+/*
+Theme Name: WP-Gallery
+Theme URI: https://github.com/kennyjackelen/wp-gallery
+Description: Responsive Wordpress theme for photo galleries
+Author: Kenny Jackelen
+Author URI: http://kennyjackelen.com/
+Version: 1.0
+Tags: 
+.
+Your theme can be your copyrighted work.
+Like WordPress, this work is released under GNU General Public License, version 2 (GPL).
+ 
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ 
+.
+*/
+
+@import 'css/bootstrap-responsive.css';
+@import 'css/bootstrap.css';
+@import 'css/main.css';
