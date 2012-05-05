@@ -1,7 +1,7 @@
 function onPageLoad()
 {
 	$('.dropdown-toggle').dropdown();
-	console.log('got here');
+	$('.collapse').collapse()
 }
 
 $(onPageLoad);

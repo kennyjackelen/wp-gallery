@@ -1,10 +1,15 @@
 body
 {
-	padding-top: 40px;
 	background: #232927;
 	background-repeat:no-repeat;
 	background-attachment:fixed;
 	color: #DDDDDD;
+}
+
+.navbar-search,
+.navbar .nav
+{
+	display: none;
 }
 
 #blog-title,
@@ -93,6 +98,13 @@ body
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px)
 {
+
+	.navbar-search,
+	.navbar .nav
+	{
+		display: block;
+	}
+
 	.post-title
 	{
 		font-size: 2em;

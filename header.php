@@ -27,27 +27,24 @@
 
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
+
+<div id="navigation" class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
-			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			<a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			 
-			<!-- Be sure to leave the brand out there if you want it shown -->
-			<a class="brand" href="#"><?php bloginfo( 'name' ) ?></a>
-			 
-			<!-- Everything you want hidden at 940px or less, place within here -->
-			<div class="nav-collapse">
-				<!-- .nav, .navbar-search, .navbar-form, etc -->
-				<form class="navbar-search pull-right" action="">
-					<input class="search-query span2" type="text" placeholder="Search">
+			<a class="brand" href="<?php bloginfo( 'url' ) ?>/"><?php bloginfo( 'name' ) ?></a>
+			<div class="nav-collapse collapse">
+				<form class="navbar-search pull-right">
+					<input type="text" class="span2 search-query" placeholder="Search">
 				</form>
 				<ul class="nav pull-right">
-					<li class="nav"><a href="<?php bloginfo( 'url' ) ?>/">Home</a></li>
+					<li <?php if(is_home()) { ?> class="active" <?php } ?>>
+						<a href="<?php bloginfo( 'url' ) ?>/">Home</a>
+					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" href="#archives" data-toggle="dropdown">
 							Archives
@@ -71,10 +68,10 @@
 						</ul>
 					</li>
 				</ul>
-			</div>
-		</div>
-	</div>
-</div>
+			</div><!-- .nav-collapse
+		</div><!-- .container-fluid -->
+	</div><!-- .navbar-inner -->
+</div><!-- #navigation -->
 
 <div id="wrapper" class="hfeed container-fluid">
   <div id="header" class="hidden-phone">
