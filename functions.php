@@ -32,7 +32,7 @@ function full_image($postID)
 	if ($attachments) {
 		foreach($attachments as $attachment) {
 		
-			return '<img src="'.wp_get_attachment_url( $attachment->ID ).'" class="hidden-phone span4">';
+			return '<img src="'.wp_get_attachment_url( $attachment->ID ).'" class="img4 span4">';
 			
 		}
 	}
@@ -60,4 +60,3 @@ function thumb_image($postID)
 	}
 }
 
-?>

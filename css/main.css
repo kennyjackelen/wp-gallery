@@ -1,15 +1,7 @@
 body
 {
 	background: #232927;
-	background-repeat:no-repeat;
-	background-attachment:fixed;
 	color: #DDDDDD;
-}
-
-.navbar-search,
-.navbar .nav
-{
-	display: none;
 }
 
 #blog-title,
@@ -61,6 +53,9 @@ body
 .post-date
 {
 	font-size: 0.75em;
+}
+.post-categories
+{
 	margin-bottom: 10px;
 }
 
@@ -78,11 +73,44 @@ body
 /* Landscape phones and down */
 @media (max-width: 480px)
 {
+	/* override responsive bootstrap */
+	.row-fluid > .img4
+	{
+    width: 136px;
+    width: 31.491712705%;
+		float: left;
+  }
+	.row-fluid > .post-info
+	{
+    width: 65.74585634900001%;
+  }
+	.row-fluid > [class*="span"] {
+		float: left;
+		margin-left: 2.127659574%;
+	}
 }
  
 /* Landscape phone to portrait tablet */
-@media (max-width: 767px)
+@media (min-width: 481px) and (max-width: 767px)
 {
+
+	/* override responsive bootstrap */
+	.row-fluid > .img4
+	{
+    width: 218px;
+    width: 31.491712705%;
+		float: left;
+  }
+	.row-fluid > .post-info
+	{
+    width: 65.74585634900001%;
+  }
+
+	.row-fluid > [class*="span"] {
+		float: left;
+		margin-left: 2.127659574%;
+	}
+
 	.post-title
 	{
 		font-size: 1.5em;
@@ -91,6 +119,9 @@ body
 	.post-date
 	{
 		font-size: 0.75em;
+	}
+	.post-categories
+	{
 		margin-bottom: 20px;
 	}
 }
@@ -98,13 +129,6 @@ body
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px)
 {
-
-	.navbar-search,
-	.navbar .nav
-	{
-		display: block;
-	}
-
 	.post-title
 	{
 		font-size: 2em;
@@ -113,7 +137,19 @@ body
 	.post-date
 	{
 		font-size: 1em;
+	}
+	.post-categories
+	{
 		margin-bottom: 30px;
+	}
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 980px)
+{
+	#header
+	{
+		padding-top: 50px;
 	}
 }
 

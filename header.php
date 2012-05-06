@@ -19,7 +19,7 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
 	
-	<?php wp_head(); ?>
+	<?php //wp_head(); ?>
 
   <link rel="alternate" type="application/rss+xml" href="<?php bloginfo('rss2_url'); ?>" title="<?php printf( __( '%s latest posts', 'your-theme' ), wp_specialchars( get_bloginfo('name'), 1 ) ); ?>" />
   <link rel="alternate" type="application/rss+xml" href="<?php bloginfo('comments_rss2_url') ?>" title="<?php printf( __( '%s latest comments', 'your-theme' ), wp_specialchars( get_bloginfo('name'), 1 ) ); ?>" />
@@ -37,7 +37,7 @@
 				<span class="icon-bar"></span>
 			</a>
 			<a class="brand" href="<?php bloginfo( 'url' ) ?>/"><?php bloginfo( 'name' ) ?></a>
-			<div class="nav-collapse collapse">
+			<div class="nav-collapse collapse" style="height: 0;">
 				<form class="navbar-search pull-right">
 					<input type="text" class="span2 search-query" placeholder="Search">
 				</form>
@@ -51,9 +51,13 @@
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Some month</a></li>
-							<li><a href="#">Another month</a></li>
-							<li><a href="#">And so on</a></li>
+							<?php
+								$args = array(
+									'type' => 'monthly',
+									'format' => 'html'
+									);
+								wp_get_archives($args);
+							?>
 						</ul>
 					</li>
 					<li class="dropdown">
@@ -62,13 +66,23 @@
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Some category</a></li>
-							<li><a href="#">Another category</a></li>
-							<li><a href="#">And so on</a></li>
+							<?php
+								$args = array(
+									'orderby' => 'name',
+									'order' => 'ASC'
+									);
+								$categories = get_categories($args);
+								foreach($categories as $category)
+								{
+							?>
+							<li><a href="<?php echo get_category_link($category->term_id); ?>"><?php echo $category->name; ?></a></li>
+							<?php
+								}
+							?>
 						</ul>
 					</li>
 				</ul>
-			</div><!-- .nav-collapse
+			</div><!-- .nav-collapse -->
 		</div><!-- .container-fluid -->
 	</div><!-- .navbar-inner -->
 </div><!-- #navigation -->
