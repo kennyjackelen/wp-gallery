@@ -16,7 +16,7 @@ function get_page_number() {
     }
 } // end get_page_number
 
-function full_image($postID)
+function full_image_url($postID)
 {					
 	$args = array(
 	'numberposts' => 1,
@@ -32,29 +32,7 @@ function full_image($postID)
 	if ($attachments) {
 		foreach($attachments as $attachment) {
 		
-			return '<img src="'.wp_get_attachment_url( $attachment->ID ).'" class="img4 span4">';
-			
-		}
-	}
-}
-
-function thumb_image($postID)
-{					
-	$args = array(
-	'numberposts' => 1,
-	'order'=> 'ASC',
-	'post_mime_type' => 'image',
-	'post_parent' => $postID,
-	'post_status' => null,
-	'post_type' => 'attachment'
-	);
-	
-	$attachments = get_children( $args );
-	
-	if ($attachments) {
-		foreach($attachments as $attachment) {
-		
-			return '<img src="'.wp_get_attachment_thumb_url( $attachment->ID ).'" class="visible-phone span4">';
+			return wp_get_attachment_url( $attachment->ID );
 			
 		}
 	}

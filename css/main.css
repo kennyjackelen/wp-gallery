@@ -2,6 +2,37 @@ body
 {
 	background: #232927;
 	color: #DDDDDD;
+	max-width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+	clear: both;
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+#background-image
+{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -100;
+}
+
+#wrapper
+{
+	padding: 0;
+}
+
+.row-fluid > .post-info:first-child
+{
+	margin-left: 2.127659574%;
+}
+
+.row-fluid > .post-image,
+.row-fluid > .post-image:last-child
+{
+	margin: 0;
 }
 
 #blog-title,
@@ -21,14 +52,10 @@ body
 	text-align: center;
 }
 
-.posts
-{
-	list-style-type: none;
-}
-
 .post
 {
-	background: #222222;
+	background: #222222; /*34,34,34*/
+	background: rgba(0,0,0,0.9);
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
@@ -56,6 +83,7 @@ body
 }
 .post-categories
 {
+	font-size: 0.75em;
 	margin-bottom: 10px;
 }
 
@@ -70,13 +98,12 @@ body
   background-color: #626262;
 }
 
-/* Landscape phones and down */
-@media (max-width: 480px)
+/* responsive bootstrap turns width to auto on small screens */
+/* we don't want that--we want to preserve the layout */
+@media (max-width: 767px)
 {
-	/* override responsive bootstrap */
-	.row-fluid > .img4
+	.row-fluid > .post-image
 	{
-    width: 136px;
     width: 31.491712705%;
 		float: left;
   }
@@ -89,28 +116,26 @@ body
 		margin-left: 2.127659574%;
 	}
 }
+
+/* Landscape phones and down */
+@media (max-width: 480px)
+{
+	/* mobile-first design makes this unnecessary */
+}
  
 /* Landscape phone to portrait tablet */
 @media (min-width: 481px) and (max-width: 767px)
 {
-
-	/* override responsive bootstrap */
-	.row-fluid > .img4
+	body
 	{
-    width: 218px;
-    width: 31.491712705%;
-		float: left;
-  }
-	.row-fluid > .post-info
-	{
-    width: 65.74585634900001%;
-  }
-
-	.row-fluid > [class*="span"] {
-		float: left;
-		margin-left: 2.127659574%;
+		background-image: url(../img/back-480.jpg);
 	}
 
+	#wrapper
+	{
+		padding-top: 145px;  /* 50% of banner height */
+	}
+	
 	.post-title
 	{
 		font-size: 1.5em;
@@ -122,6 +147,7 @@ body
 	}
 	.post-categories
 	{
+		font-size: 0.75em;
 		margin-bottom: 20px;
 	}
 }
@@ -129,6 +155,17 @@ body
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px)
 {
+	body
+	{
+		background-image: url(../img/back-768.jpg);
+	}
+
+	#wrapper
+	{
+		padding-top: 231px;  /* 50% of banner height */
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 	.post-title
 	{
 		font-size: 2em;
@@ -140,16 +177,36 @@ body
 	}
 	.post-categories
 	{
+		font-size: 1em;
 		margin-bottom: 30px;
 	}
 }
  
-/* Portrait tablet to landscape and desktop */
+/* Only need additional padding if the navbar is fixed */
+/* this happens at screens of 980px or greater */
 @media (min-width: 980px)
 {
-	#header
+	body
 	{
-		padding-top: 50px;
+		background-image: url(../img/back-980.jpg);
+	}
+	
+	#wrapper
+	{
+		padding-top: 345px;  /* 50% of banner height plus 50px*/
+	}
+}
+
+@media (min-width: 1200px)
+{
+	body
+	{
+		background-image: url(../img/back-1200.jpg);
+	}
+	
+	#wrapper
+	{
+		padding-top: 411px;  /* 50% of banner height plus 50px*/
 	}
 }
 
