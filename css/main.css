@@ -52,12 +52,30 @@ body
 	text-align: center;
 }
 
-.post
+.post,
+.single-post
 {
 	background: #222222; /*34,34,34*/
 	background: rgba(0,0,0,0.9);
 	margin-top: 15px;
 	margin-bottom: 15px;
+}
+
+.single-post
+{
+	padding: 15px;
+}
+
+.single-post .post-title,
+.single-post .post-title a
+{
+	margin-top: 0;
+}
+
+.single-post .post-categories
+{
+	margin-top: 10px;
+	margin-bottom: 0;
 }
 
 .post-title,.post-date
