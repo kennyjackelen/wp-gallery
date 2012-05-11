@@ -2,12 +2,10 @@
 {
 	$.fn.extend({
 		slideshow: function(options)
-			{			
+			{
 				// set default values
 				var defaults = {
-					index: 0,
-					speed: 300,
-					delay: 0			
+					fullscreen: false
 				};
 				
 				var options = $.extend(defaults, options);
@@ -41,30 +39,44 @@
 				
 				var resizeImage = function Slideshow$ResizeImage(image_object)
 				{
+					var top,left;				
 					var window_height = $(window).height();
 					var window_width = $(window).width();
-					var image_height = image_object.get(0).height;
-					var image_width = image_object.get(0).width;
 					
-					// scale image to fit in parent
-					if (image_height > window_height || image_width > window_width)
+					var native_size = image_object.data('native-size');
+					var image_height = native_size.height;
+					var image_width = native_size.width;
+					
+					var ratio = image_width / image_height;
+					
+					var height_ratio = image_height / window_height;
+					var width_ratio = image_width / window_width;
+					
+					if (height_ratio > width_ratio && height_ratio > 1)
 					{
-						console.log('bigger');
 						image_object.height(window_height);
-						image_height = window_height;
-						image_width = image_object.get(0).width;
-						if(image_width > window_width)
-						{
-							image_object.width(window_width);
-							image_width = window_width;
-						}
+						image_object.width(ratio * window_height);
+						top = 0;
+						left = (window_width - ratio * window_height)/2;
+					}
+					else if (width_ratio > 1)
+					{
+						image_object.height(window_width / ratio);
+						image_object.width(window_width);
+						top = (window_height - window_width / ratio)/2;
+						left = 0;
+					}
+					else
+					{
+						top = (window_height - image_height)/2;
+						left = (window_width - image_width)/2;
 					}
 					
 					// center image in the div
 					image_object.css(
 						{
-							'top': (window_height - image_height)/2,
-							'left': (window_width - image_width)/2
+							'top': top,
+							'left': left
 						}
 					);
 				};
@@ -86,16 +98,22 @@
 								'margin': 0,
 								'padding': 0
 							}
+						)
+						.load(
+							function Slideshow$ImageLoaded()
+							{
+								var img = $(this);
+								var img_size = 
+								{
+									'height': this.height,
+									'width': this.width
+								};
+								img.data('native-size', img_size);
+								resizeImage($(this));
+							}
 						);
 						
 					slide_object.append(img_object);
-					
-					img_object.load(
-						function Slideshow$ImageLoaded()
-						{
-							resizeImage($(this));
-						}
-					);
 				};
 				
 				return this.each(
@@ -122,6 +140,7 @@
 						var dragElementStart;
 						var dragPosition;
 						var isDragging;
+						var isFullscreen = o.fullscreen;
 						
 						// build a backdrop object and insert it after the gallery
 						var backdrop_id = source_id + '-slideshow-backdrop';
@@ -182,7 +201,7 @@
 									container_object.trigger('prev');
 								}
 							)
-							.append('<i class="icon-arrow-left icon-white">');
+							.append('<i class="icon-arrow-left icon-white"></i>');
 						var next_button_object = $('<button>')
 							.addClass('btn')
 							.addClass('btn-inverse')
@@ -192,7 +211,7 @@
 									container_object.trigger('next');
 								}
 							)
-							.append('<i class="icon-arrow-right icon-white">');
+							.append('<i class="icon-arrow-right icon-white"></i>');
 						
 						var exit_button_object = $('<button>')
 							.addClass('btn')
@@ -206,7 +225,7 @@
 
 								}
 							)
-							.append('<i class="icon-remove icon-white">');
+							.append('<i class="icon-remove icon-white"></i>');
 						
 						var fullscreen_button_object = $('<button>')
 							.addClass('btn')
@@ -215,10 +234,32 @@
 								function Slideshow$FullscreenClicked(clickEvent)
 								{
 									// nothing yet
+									
+									isFullscreen = !isFullscreen;
+						
+									if (isFullscreen)
+									{
+										$('.icon-resize-small',fullscreen_button_object).show();
+										$('.icon-resize-full',fullscreen_button_object).hide();
+									}
+									else
+									{
+										$('.icon-resize-full',fullscreen_button_object).show();
+										$('.icon-resize-small',fullscreen_button_object).hide();
+									}
 								}
 							)
-							.append('<i class="icon-resize-full icon-white">');
+							.append('<i class="icon-resize-full icon-white"></i><i class="icon-resize-small icon-white"></i>');
 							
+						
+						if (isFullscreen)
+						{
+							$('.icon-resize-full',fullscreen_button_object).hide();
+						}
+						else
+						{
+							$('.icon-resize-small',fullscreen_button_object).hide();
+						}
 						
 						var prevnext_button_group = $('<div>')
 							.css('float','left')
@@ -232,13 +273,13 @@
 							.append(fullscreen_button_object);
 							
 						var exit_button_group = $('<div>')
-							.css('float','left')
+							.css('float','right')
 							.addClass('btn-group')
 							.append(exit_button_object);
 						
-						header_object.append(exit_button_group);
 						header_object.append(prevnext_button_group);
 						header_object.append(fullscreen_button_group);
+						header_object.append(exit_button_group);
 						
 						backdrop_object.append(header_object);
 						
@@ -419,7 +460,7 @@
 								var isTouch = (mouseEvent.type === 'touchstart');
 							
 								// only care about left-click
-								if (mouseEvent.which !== 1)
+								if (!isTouch && mouseEvent.which !== 1)
 								{
 									return;
 								}
@@ -432,7 +473,7 @@
 								dragStartTime = new Date().getTime();
 								if (isTouch)
 								{
-									dragMouseStart = mouseEvent.targetTouches[0].pageX;
+									dragMouseStart = mouseEvent.originalEvent.targetTouches[0].pageX;
 								}
 								else
 								{
@@ -461,7 +502,7 @@
 										
 										if (isTouch)
 										{
-											dragPosition = mouseEvent.targetTouches[0].pageX;
+											dragPosition = mouseEvent.originalEvent.targetTouches[0].pageX;
 										}
 										else
 										{
