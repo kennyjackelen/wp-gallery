@@ -16,7 +16,6 @@
 	<script src="<?php bloginfo('template_url'); ?>/js/libs/bootstrap-dropdown.js"></script>
 	<script src="<?php bloginfo('template_url'); ?>/js/libs/bootstrap-collapse.js"></script>
 	<script src="<?php bloginfo('template_url'); ?>/js/libs/modernizr.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/js/libs/swipe.js"></script>
 	<script src="<?php bloginfo('template_url'); ?>/js/slideshow.js"></script>
 	<script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>
 
