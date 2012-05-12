@@ -141,6 +141,7 @@
 						var dragPosition;
 						var isDragging;
 						var isFullscreen = o.fullscreen;
+						var isAutomaticMode = false;
 						
 						// build a backdrop object and insert it after the gallery
 						var backdrop_id = source_id + '-slideshow-backdrop';
@@ -181,8 +182,6 @@
 							.addClass('slideshow-header')
 							.css(
 								{
-									'padding': '15px',
-									'padding-right': '150px',
 									'position': 'fixed',
 									'top': '0',
 									'left': 0,
@@ -202,6 +201,7 @@
 								}
 							)
 							.append('<i class="icon-arrow-left icon-white"></i>');
+							
 						var next_button_object = $('<button>')
 							.addClass('btn')
 							.addClass('btn-inverse')
@@ -213,6 +213,30 @@
 							)
 							.append('<i class="icon-arrow-right icon-white"></i>');
 						
+						var playpause_button_object = $('<button>')
+							.addClass('btn')
+							.addClass('btn-inverse')
+							.click(
+								function Slideshow$PlayPauseClicked(clickEvent)
+								{									
+									isAutomaticMode = !isAutomaticMode;
+						
+									if (isAutomaticMode)
+									{
+										$('.icon-pause',playpause_button_object).show();
+										$('.icon-play',playpause_button_object).hide();
+									}
+									else
+									{
+										$('.icon-play',playpause_button_object).show();
+										$('.icon-pause',playpause_button_object).hide();
+									}
+								}
+							)
+							.append('<i class="icon-play icon-white"></i><i class="icon-pause icon-white"></i>');
+							
+						$('.icon-pause',playpause_button_object).hide();
+						
 						var exit_button_object = $('<button>')
 							.addClass('btn')
 							.addClass('btn-inverse')
@@ -222,19 +246,29 @@
 									// close the slideshow
 									backdrop_object.hide();
 									isVisible = false;
+									isAutomaticMode = false;
 
 								}
 							)
 							.append('<i class="icon-remove icon-white"></i>');
+						
+						var help_button_object = $('<button>')
+							.addClass('btn')
+							.addClass('btn-inverse')
+							.click(
+								function Slideshow$HelpClicked(clickEvent)
+								{
+									// nothing yet
+								}
+							)
+							.append('<i class="icon-question-sign icon-white"></i>');
 						
 						var fullscreen_button_object = $('<button>')
 							.addClass('btn')
 							.addClass('btn-inverse')
 							.click(
 								function Slideshow$FullscreenClicked(clickEvent)
-								{
-									// nothing yet
-									
+								{									
 									isFullscreen = !isFullscreen;
 						
 									if (isFullscreen)
@@ -263,23 +297,40 @@
 						
 						var prevnext_button_group = $('<div>')
 							.css('float','left')
+							.css('padding','5px 5px 5px 0px')  // no padding on left side
 							.addClass('btn-group')
 							.append(prev_button_object)
 							.append(next_button_object);
 							
-						var fullscreen_button_group = $('<div>')
+						var playpause_button_group = $('<div>')
 							.css('float','left')
+							.css('padding','5px')
+							.addClass('btn-group')
+							.append(playpause_button_object);
+							
+						var fullscreen_button_group = $('<div>')
+							.css('float','right')
+							.css('padding','5px 0px 5px 5px')  // no padding on right side
 							.addClass('btn-group')
 							.append(fullscreen_button_object);
 							
+						var help_button_group = $('<div>')
+							.css('float','right')
+							.css('padding','5px 0px 5px 5px')  // no padding on right side
+							.addClass('btn-group')
+							.append(help_button_object);
+							
 						var exit_button_group = $('<div>')
 							.css('float','right')
+							.css('padding','5px')
 							.addClass('btn-group')
 							.append(exit_button_object);
 						
+						header_object.append(playpause_button_group);
 						header_object.append(prevnext_button_group);
-						header_object.append(fullscreen_button_group);
 						header_object.append(exit_button_group);
+						header_object.append(help_button_group);
+						header_object.append(fullscreen_button_group);
 						
 						backdrop_object.append(header_object);
 						
@@ -479,6 +530,7 @@
 								{
 									dragMouseStart = mouseEvent.pageX;
 								}
+								dragPosition = dragMouseStart;
 								dragElementStart = container_object.position().left;
 								isDragging = true;
 								
@@ -493,6 +545,7 @@
 											return;
 										}
 										
+										var newDragPosition;
 										var isTouch = (mouseEvent.type === 'touchmove');
 								
 										mouseEvent.preventDefault();
@@ -502,12 +555,21 @@
 										
 										if (isTouch)
 										{
-											dragPosition = mouseEvent.originalEvent.targetTouches[0].pageX;
+											newDragPosition = mouseEvent.originalEvent.targetTouches[0].pageX;
 										}
 										else
 										{
-											dragPosition = mouseEvent.pageX;
+											newDragPosition = mouseEvent.pageX;
 										}
+										
+										if (newDragPosition === dragPosition)
+										{
+											// horizontal position didn't change
+											return;
+										}
+										
+										isAutomaticMode = false;
+										dragPosition = newDragPosition;
 										
 										var newPos = dragElementStart + dragPosition - dragMouseStart;
 										

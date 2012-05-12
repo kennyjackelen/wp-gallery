@@ -36,6 +36,11 @@
 
 			<?php endwhile; ?>
     </div><!-- #content -->
+    
+    <div id="nav-below">
+      <div class="nav-previous"><?php previous_post_link(); ?></div>
+      <div class="nav-next"><?php next_post_link(); ?></div>
+    </div><!-- #nav-below -->
  
 </div><!-- #container -->
  

@@ -10,6 +10,23 @@ body
 	background-position: top center;
 }
 
+.nav-previous a, .nav-next a
+{
+	color: #DDDDDD;
+}
+
+.nav-previous
+{
+	float: left;
+	margin-bottom: 15px;
+}
+
+.nav-next
+{
+	float: right;
+	margin-bottom: 15px;
+}
+
 #background-image
 {
 	width: 100%;
@@ -24,7 +41,8 @@ body
 	padding: 0;
 }
 
-.row-fluid > .post-info:first-child
+.row-fluid > .post-info:first-child,
+.row-fluid > .page-title-inner:first-child
 {
 	margin-left: 2.127659574%;
 }
@@ -53,7 +71,8 @@ body
 }
 
 .post,
-.single-post
+.single-post,
+.page-title
 {
 	background: #222222; /*34,34,34*/
 	background: rgba(0,0,0,0.9);
@@ -78,7 +97,8 @@ body
 	margin-bottom: 0;
 }
 
-.post-title,.post-date
+.post-title,
+.post-date
 {
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -86,12 +106,21 @@ body
 	line-height: 1.25;
 }
 
-.post-title,
-.post-title a
+.page-title-inner
+{
+	line-height: 2;
+}
+
+.post-title a,
+.page-title-inner
 {
 	color: #E16734;
 	font-weight: bold;
 	font-size: 1em;
+}
+
+.post-title
+{
 	margin-top: 10px;
 }
 
@@ -154,9 +183,13 @@ body
 		padding-top: 145px;  /* 50% of banner height */
 	}
 	
-	.post-title
+	.post-title,
+	.page-title-inner
 	{
 		font-size: 1.5em;
+	}
+	.post-title
+	{
 		margin-top: 20px;
 	}
 	.post-date
@@ -184,9 +217,13 @@ body
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-	.post-title
+	.post-title,
+	.page-title-inner
 	{
 		font-size: 2em;
+	}
+	.post-title
+	{
 		margin-top: 30px;
 	}
 	.post-date

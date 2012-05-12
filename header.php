@@ -39,8 +39,8 @@
 			</a>
 			<a class="brand" href="<?php bloginfo( 'url' ) ?>/"><?php bloginfo( 'name' ) ?></a>
 			<div class="nav-collapse collapse" style="height: 0;">
-				<form class="navbar-search pull-right">
-					<input type="text" class="span2 search-query" placeholder="Search">
+				<form class="navbar-search pull-right" method="get" action="<?php bloginfo( 'home' ); ?>/">
+					<input type="text" class="span2 search-query" placeholder="Search" name="s" id="s" >
 				</form>
 				<ul class="nav pull-right">
 					<li <?php if(is_home()) { ?> class="active" <?php } ?>>
@@ -89,14 +89,5 @@
 </div><!-- #navigation -->
 
 <div id="wrapper" class="hfeed container-fluid">
-  <!--<div id="header" class="hidden-phone">
-
-			<div id="blog-title"><span><a href="<?php bloginfo( 'url' ) ?>/" title="<?php bloginfo( 'name' ) ?>" rel="home">
-				<?php bloginfo( 'name' ) ?>
-			</a></span></div>
-
-			<div id="blog-description"><?php bloginfo( 'description' ) ?></div>
-
-  </div><!-- #header -->
 
   <div id="main">
