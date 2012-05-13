@@ -54,14 +54,6 @@
 		imageObject = $('<img>')
 			.attr( 'src', slideObject.data('slideshow-slide-image') )
 			.addClass('slideshow-image')
-			.css(
-				{
-					'border': 'none',
-					'position': 'relative',
-					'margin': 0,
-					'padding': 0
-				}
-			)  // .css
 			.load(
 				function Slideshow$ImageLoaded() {
 					var img = $(this);
@@ -552,7 +544,6 @@
 	Slideshow.prototype.keypressHandler = function Slideshow$keypressHandler( event ) {
 	
 		var whichKey = event.keyCode;
-		var whichKey = event.keyCode;
 		
 		console.log('keypress: ' + whichKey);
 		
@@ -638,20 +629,7 @@
 		
 		// build a backdrop object and insert it after the gallery
 		this.backdropObject = $('<div>')
-			.addClass('slideshow-expand')
-			.css(
-				{
-					'margin': 0,
-					'padding': 0,
-					'border': 0,
-					'outline': 0,
-					'position': 'fixed',
-					'top': 0,
-					'left': 0,
-					'background-color': '#232927',
-					'background-color': 'rgba(0,0,0,0.75)',
-					'z-index': 10000
-				})
+			.addClass('slideshow-backdrop slideshow-expand')
 			.hide();
 			
 		// tack this backdrop element onto the document after the gallery
@@ -692,13 +670,7 @@
 		}
 		
 		this.containerObject = $('<div>')
-			.addClass('slideshow-expand')
-			.css(
-				{
-					'position': 'fixed',
-					'top': 0,
-					'left': 0
-				});
+			.addClass('slideshow-deck slideshow-expand');
 				
 		return this.containerObject;
 	};
@@ -720,11 +692,6 @@
 				// build a container div for the slide
 				slideObject = $('<div>')
 						.addClass('slideshow-slide slideshow-expand')
-						.css(
-							{
-								'position': 'absolute',
-								'top': 0
-							})
 						.data(
 							{
 								'slideshow-slide-index': index,
@@ -748,7 +715,7 @@
 		
 		// store the max index so we'll know when we've hit the end
 		this.maxIndex = index - 1;
-	}
+	};
 	
 	Slideshow.prototype.getHeader = function Slideshow$getHeader() {
 		
@@ -762,17 +729,7 @@
 		}
 		
 		this.headerObject = $('<div>')
-			.addClass('slideshow-header')
-			.css(
-				{
-					'position': 'fixed',
-					'top': '0',
-					'left': 0,
-					'background-color': '#000000',
-					'background-color': 'rgba(0,0,0,0.5)',
-					'z-index': 20000								
-				}
-			);
+			.addClass('slideshow-header');
 		
 		this.prevButton = $('<button>')
 			.addClass('btn btn-inverse')
@@ -814,28 +771,20 @@
 		}
 		
 		prevnextButtonGroup = $('<div>')
-			.css('float','left')
-			.css('padding','5px 5px 5px 0px')  // no padding on left side
-			.addClass('btn-group')
+			.addClass('btn-group slideshow-button-group-left')
 			.append( this.prevButton )
 			.append( this.nextButton );
 			
 		playpauseButtonGroup = $('<div>')
-			.css('float','left')
-			.css('padding','5px')
-			.addClass('btn-group')
+			.addClass('btn-group slideshow-button-group-left slideshow-button-group-edge')
 			.append( this.playPauseButton );
 			
 		fullscreenButtonGroup = $('<div>')
-			.css('float','right')
-			.css('padding','5px 0px 5px 5px')  // no padding on right side
-			.addClass('btn-group')
+			.addClass('btn-group slideshow-button-group-right')
 			.append( this.fullscreenButton );
 			
 		exitButtonGroup = $('<div>')
-			.css( 'float', 'right' )
-			.css( 'padding', '5px' )
-			.addClass('btn-group')
+			.addClass('btn-group slideshow-button-group-right slideshow-button-group-edge')
 			.append( this.exitButton );
 		
 		this.headerObject.append( playpauseButtonGroup );
@@ -853,21 +802,7 @@
 		}
 	
 		this.footerObject = $('<div>')
-			.addClass('slideshow-footer')
-			.css(
-				{
-					'max-height': '38px',
-					'position': 'fixed',
-					'bottom': 0,
-					'left': 0,
-					'background-color': '#000000',
-					'background-color': 'rgba(0,0,0,0.5)',
-					'text-align': 'center',
-					'font-weight': 'bold',
-					'line-height': 2,
-					'z-index': 20000								
-				}
-			);
+			.addClass('slideshow-footer');
 			
 		return this.footerObject;
 	};
