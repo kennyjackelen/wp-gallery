@@ -29,7 +29,7 @@
 			<?php while ( have_posts() ) :the_post(); ?>
 			<?php $count++; ?>
 			<div class="post row-fluid" >
-				<?php if($count % 2 == 1) { ?><img class="post-image span5" src="<?php echo full_image_url($id); ?>"> <?php } ?>
+				<?php if($count % 2 == 1) { ?><img class="post-image span5" src="<?php echo full_image_url($id); ?>"><?php } ?>
 				<div class="post-info span7">
 					<div class="post-title"><a href="<?php echo get_permalink($id); ?>"><?php the_title(); ?></a></div>
 					<div class="post-date"><?php the_date('l, F j, Y'); ?></div>

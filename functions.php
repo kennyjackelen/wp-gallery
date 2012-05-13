@@ -28,14 +28,25 @@ function full_image_url($postID)
 	);
 	
 	$attachments = get_children( $args );
-	
+	$best_ratio = 10000;  // something really high
+	$best_attachment_id = 0;
 	if ($attachments) {
 		foreach($attachments as $attachment) {
 		
-			return wp_get_attachment_url( $attachment->ID );
+			$imgmeta = wp_get_attachment_metadata( $attachment->ID );
+			$width = $imgmeta['width'];
+			$height = $imgmeta['height'];
+			$this_ratio = abs( $width / $height - 3 / 2 );
 			
+			if ( $this_ratio < $best_ratio )
+			{
+				$best_ratio = $this_ratio;
+				$best_attachment_id = $attachment->ID;
+			}			
 		}
 	}
+			
+	return wp_get_attachment_url( $best_attachment_id );
 }
 
 //deactivate WordPress function
