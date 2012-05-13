@@ -411,6 +411,8 @@
 		else {
 			$( '.icon-play', this.playPauseButton ).show();
 			$( '.icon-pause', this.playPauseButton ).hide();
+		
+			clearTimeout( this.timeoutId );
 		}
 		
 	};
@@ -538,9 +540,7 @@
 				}
 			);
 		}
-
 		
-	
 	};
 	
 	Slideshow.prototype.keypressHandler = function Slideshow$keypressHandler( event ) {
