@@ -245,6 +245,7 @@
 				'startX': event.pageX,
 				'startY': event.pageY,
 				'currentX': event.pageX,
+				'currentY': event.pageX,
 				'startTime': new Date().getTime(),
 				'startPos': this.containerObject.position().left,
 				'windowWidth': $(window).width()
@@ -294,10 +295,12 @@
 		
 		var oldX = this.currentDrag.currentX,
 			currentX = event.pageX,
+			currentY = event.pageY,
 			windowWidth = this.currentDrag.windowWidth,
 			newPos;
 		
 		this.currentDrag.currentX = currentX;
+		this.currentDrag.currentY = currentY;
 			
 		if ( oldX === currentX )
 		{
@@ -328,16 +331,17 @@
 	Slideshow.prototype.swipeStop = function Slideshow$swipeStop( event ) {
 		
 		var timeDelta = new Date().getTime() - this.currentDrag.startTime,
-			currentX = event.pageX,
-			currentY = event.pageY,
-			posDelta = currentX - this.currentDrag.startX,
+			currentX = this.currentDrag.currentX,
+			currentY = this.currentDrag.currentY,
+			startX = this.currentDrag.startX,
+			posDelta = currentX - startX,
 			triggerSlide = false;
 		
 		// stop listening for events
 		this.containerObject.off('mousemove touchmove mouseup mouseleave touchend touchcancel');
 		
 		// user didn't move very far--interpret as a click and close the slideshow
-		if ( Math.abs(this.currentDrag.startY - currentY) < 5 && Math.abs(this.currentDrag.startX - currentX) < 5 )
+		if ( Math.abs(this.currentDrag.startY - currentY) < 5 && Math.abs(startX - currentX) < 5 )
 		{
 			this.hideSlideshow();
 			this.currentDrag = {};
