@@ -142,11 +142,13 @@
 	
 		this.nextButton.click(
 			function Slideshow$nextClicked() {
+					_this.turnOffAutomaticMode();
 					_this.nextSlide();
 			});
 			
 		this.prevButton.click(
 			function Slideshow$prevClicked() {
+					_this.turnOffAutomaticMode();
 					_this.prevSlide();
 			});
 			
