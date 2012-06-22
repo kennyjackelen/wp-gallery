@@ -23,7 +23,11 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/style.css" />
+	<!-- start styles -->
+	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/libs/min/bootstrap-all.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/main.min.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/slideshow.css" /> -->
+	<!-- end styles -->
 	
 	<?php wp_head(); ?>
 

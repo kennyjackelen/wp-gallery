@@ -15,13 +15,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="<?php bloginfo('template_url'); ?>/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
-  <!-- scripts concatenated and minified via build script -->
-	<script src="<?php bloginfo('template_url'); ?>/js/libs/bootstrap-transition.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/js/libs/bootstrap-dropdown.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/js/libs/bootstrap-collapse.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/js/libs/modernizr.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/js/slideshow.js"></script>
+	<!-- start scripts -->
+	<script src="<?php bloginfo('template_url'); ?>/js/libs/min/bootstrap.min.js"></script>
+	<!-- <script src="<?php bloginfo('template_url'); ?>/js/libs/modernizr.js"></script> -->
+	<!-- <script src="<?php bloginfo('template_url'); ?>/js/swipeshow.js"></script> -->
+	<!-- <script src="<?php bloginfo('template_url'); ?>/js/slideshow.js"></script> -->
 	<script src="<?php bloginfo('template_url'); ?>/js/main.js"></script>
   <!-- end scripts -->
+  
 </body>
 </html>

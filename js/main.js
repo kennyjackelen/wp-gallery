@@ -1,7 +1,7 @@
 function onPageLoad()
 {
 	$('.dropdown-toggle').dropdown();
-	$('.gallery').slideshow();
+//	$('.gallery').swipeshow();
 }
 
 $(onPageLoad);

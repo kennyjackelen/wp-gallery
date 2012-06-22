@@ -31,10 +31,9 @@
 		this.backdropObject.append( this.getContainer() );
 		this.backdropObject.append( this.getFooter() );
 		
-		this.initSlides();
-		
 		this.wireUpEvents();
-		this.wireUpListeners();
+		
+		this.initSlides();
 		
 		this.expandDivs();
 	
@@ -133,41 +132,47 @@
 		var _this = this;
 	
 		this.nextButton.click(
-			function Slideshow$nextClicked() {
+			function Slideshow$nextClicked( clickEvent ) {
 					_this.turnOffAutomaticMode();
 					_this.nextSlide();
+					clickEvent.stopPropagation();
 			});
 			
 		this.prevButton.click(
-			function Slideshow$prevClicked() {
+			function Slideshow$prevClicked( clickEvent ) {
 					_this.turnOffAutomaticMode();
 					_this.prevSlide();
+					clickEvent.stopPropagation();
 			});
 			
 		this.fullscreenButton.click(
-			function Slideshow$fullscreenClicked() {
+			function Slideshow$fullscreenClicked( clickEvent ) {
 					_this.toggleFullscreen();
+					clickEvent.stopPropagation();
 			});
 			
 		this.playPauseButton.click(
-			function Slideshow$playPauseClicked() {
+			function Slideshow$playPauseClicked( clickEvent ) {
 					_this.toggleAutomaticMode();
+					clickEvent.stopPropagation();
 			});
 			
 		this.exitButton.click(
-			function Slideshow$exitClicked() {
+			function Slideshow$exitClicked( clickEvent ) {
 					_this.hideSlideshow();
+					clickEvent.stopPropagation();
 			});
 	
 	};
 	
 	Slideshow.prototype.wireUpListeners = function Slideshow$wireUpListeners() {
 		
-		var _this = this;
+		var _this = this,
+			jDocument = $(document);
 		
-		// listen for swipes
-		this.containerObject
-			.on('mousedown touchstart', 
+		// listen for swipe start
+		jDocument
+			.on('mousedown.slideshow touchstart.slideshow', 
 				function Slideshow$touchStartHandler(event) {
 					
 					var actualEvent,
@@ -194,6 +199,62 @@
 					_this.swipeStart(actualEvent);
 					
 				});
+				
+			
+		jDocument
+			.on('mousemove.slideshow touchmove.slideshow', 
+				function Slideshow$touchMoveHandler(event) {
+				
+					var isTouch = (event.type === 'touchmove');
+				
+					if ( !_this.currentDrag.isInProgress )
+					{
+						// not swiping, so just quit
+						return;
+					}
+				
+					event.preventDefault();
+					event.stopPropagation();
+				
+					if ( isTouch )
+					{
+						actualEvent = event.originalEvent.targetTouches[0];
+					}
+					else
+					{
+						actualEvent = event;
+					}
+				
+					_this.swipeContinue(actualEvent);
+		
+				}
+			);
+			
+		jDocument
+			.on('mouseup.slideshow mouseleave.slideshow touchend.slideshow touchcancel.slideshow',
+				function Slideshow$touchEndHandler(event) {
+				
+					if ( !_this.currentDrag.isInProgress )
+					{
+						// not swiping, so just quit
+						return;
+					}
+
+					event.preventDefault();
+					event.stopPropagation();
+					
+					_this.swipeStop(event);
+					
+				}
+			);
+		
+		// listen for keystrokes
+		jDocument
+			.on( 'keypress.slideshow',
+				function Slideshow$keypressWrapper( event ) {
+						_this.keypressHandler( event );
+				}
+			);
 		
 		// listen for window resizes
 		$(window).resize(
@@ -240,46 +301,9 @@
 				'currentY': event.pageX,
 				'startTime': new Date().getTime(),
 				'startPos': this.containerObject.position().left,
-				'windowWidth': $(window).width()
+				'windowWidth': $(window).width(),
+				'isTouch': ( event.type === 'touchstart' )
 			};
-			
-		this.containerObject
-			.on('mousemove touchmove', 
-				function Slideshow$touchMoveHandler(event) {
-					var isTouch = (event.type === 'touchmove');
-				
-					if ( !_this.currentDrag.isInProgress )
-					{
-						// shouldn't happen
-						return;
-					}
-				
-					event.preventDefault();
-					event.stopPropagation();
-				
-					if ( isTouch )
-					{
-						actualEvent = event.originalEvent.targetTouches[0];
-					}
-					else
-					{
-						actualEvent = event;
-					}
-				
-					_this.swipeContinue(actualEvent);
-		
-				}
-			) // .on mousemove
-			.on('mouseup mouseleave touchend touchcancel',
-				function Slideshow$touchEndHandler(event) {
-
-					event.preventDefault();
-					event.stopPropagation();
-					
-					_this.swipeStop(event);
-					
-				}
-			); // .on mouseup
 		
 	};
 	
@@ -289,7 +313,14 @@
 			currentX = event.pageX,
 			currentY = event.pageY,
 			windowWidth = this.currentDrag.windowWidth,
-			newPos;
+			newPos,
+			isTouch = (event.type === 'touchmove');
+		
+		// make sure events are consistent
+		if ( isTouch !== this.currentDrag.isTouch )
+		{
+			return;
+		}
 		
 		this.currentDrag.currentX = currentX;
 		this.currentDrag.currentY = currentY;
@@ -327,13 +358,17 @@
 			currentY = this.currentDrag.currentY,
 			startX = this.currentDrag.startX,
 			posDelta = currentX - startX,
-			triggerSlide = false;
+			triggerSlide = false,
+			isTouch = (event.type === 'touchend' || event.type === 'touchcancel');
 		
-		// stop listening for events
-		this.containerObject.off('mousemove touchmove mouseup mouseleave touchend touchcancel');
+		// make sure events are consistent
+		if ( isTouch !== this.currentDrag.isTouch )
+		{
+			return;
+		}
 		
 		// user didn't move very far--interpret as a click and close the slideshow
-		if ( Math.abs(this.currentDrag.startY - currentY) < 5 && Math.abs(startX - currentX) < 5 )
+		if ( Math.abs( this.currentDrag.startY - currentY ) < 5 && Math.abs( startX - currentX ) < 5 )
 		{
 			this.hideSlideshow();
 			this.currentDrag = {};
@@ -341,12 +376,12 @@
 		}
 								
 		// trigger a slide in two scenarios:
-		if ( timeDelta < 250 && Math.abs(posDelta) > 20 )
+		if ( timeDelta < 250 && Math.abs( posDelta ) > 20 )
 		{
 			// 1) short, quick swipes
 			triggerSlide = true;
 		}
-		else if ( Math.abs(posDelta) > this.currentDrag.windowWidth / 2 )
+		else if ( Math.abs( posDelta ) > this.currentDrag.windowWidth / 2 )
 		{
 			// 2) long, slow swipes (more than 50% the slide width)
 			triggerSlide = true;
@@ -396,7 +431,6 @@
 	};
 	
 	Slideshow.prototype.toggleAutomaticMode = function Slideshow$toggleAutomaticMode() {
-	
 	
 		this.isAutomaticMode = !this.isAutomaticMode;
 
@@ -598,19 +632,19 @@
 		if ( this.isVisible ) {
 			return;
 		}
+
+		this.wireUpListeners();
 	
 		this.backdropObject.show();
 		this.isVisible = true;
 		
-		// listen for keystrokes
-		$(document).on( 'keypress.slideshow',
-			function Slideshow$keypressWrapper( event ) {
-					_this.keypressHandler( event );
-			});
 	};
 	
 	Slideshow.prototype.hideSlideshow = function Slideshow$hideSlideshow() {
 	
+		// stop listening for events
+		$(document).off('.slideshow');
+		
 		if ( !this.isVisible ) {
 			return;
 		}
@@ -619,9 +653,6 @@
 		this.isVisible = false;
 		
 		this.turnOffAutomaticMode();
-		
-		// stop listening for keystrokes
-		$(document).off('keypress.slideshow');
 		
 	};
 	

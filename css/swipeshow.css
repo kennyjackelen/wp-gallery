@@ -1,0 +1,63 @@
+.swipeshow-master
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #232927;
+	background-color: rgba(0,0,0,0.75);
+	z-index: 10000;
+}
+
+.swipeshow-header
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #000000;
+	background-color: rgba(0,0,0,0.5);
+	z-index: 20000;
+}
+
+.swipeshow-footer
+{
+	max-height: 38px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	background-color: #000000;
+	background-color: rgba(0,0,0,0.5);
+	text-align: center;
+	font-weight: bold;
+	line-height: 2;
+	z-index: 20000;
+}
+
+.swipeshow-image
+{
+	border: none;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	z-index: 10001;
+}
+
+.swipeshow-button-group-left
+{
+	float: left;
+	padding: 5px 5px 5px 0px;  /* no padding on left side */
+}
+
+.swipeshow-button-group-right
+{
+	float: right;
+	padding: 5px 0px 5px 5px;  /* no padding on right side */
+}
+
+.swipeshow-button-group-edge
+{
+	padding: 5px;
+}
