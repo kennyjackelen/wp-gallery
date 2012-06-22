@@ -19,7 +19,7 @@ function get_page_number() {
 function full_image_url($postID)
 {					
 	$args = array(
-	'numberposts' => 1,
+	'numberposts' => -1,
 	'order'=> 'ASC',
 	'post_mime_type' => 'image',
 	'post_parent' => $postID,
