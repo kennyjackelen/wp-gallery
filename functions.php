@@ -128,26 +128,60 @@ function wp_gallery($attr)
 		$gallery_style = "
 		<style type='text/css'>
 			#{$selector} {
-				display: inline-block;
-				margin: 0 auto;
 				clear: both;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 820px;
 			}			
 			#{$selector} .gallery-item {
 				float: {$float};
-				margin-top: 10px;
 				text-align: center;
-				margin: 5px;
+				margin: 1%;
+				width: 150px;
 			}
 			#{$selector} img {
 				border: 2px solid #E16734;
+				max-width: 100%;
 			}
 			#{$selector} .gallery-caption {
 				margin-left: 0;
 			}
+			@media screen and (min-width:734px){
+				#{$selector} {
+					max-width: 102.5%;
+				}
+				#{$selector} .gallery-item {
+					width: 18%;
+				}
+			}
+			@media screen and (max-width:733px){
+				#{$selector} {
+					max-width: 102.5%;
+				}
+				#{$selector} .gallery-item {
+					width: 23%;
+				}
+			}
+			@media screen and (max-width:574px){
+				#{$selector} {
+					max-width: 102.5%;
+				}
+				#{$selector} .gallery-item {
+					width: 31%;
+				}
+			}
+			@media screen and (max-width:480px){
+				#{$selector} {
+					max-width: 102.5%;
+				}
+				#{$selector} .gallery-item {
+					width: 48%;
+				}
+			}
 		</style>
 		<!-- see wp_gallery() in functions.php -->";
 	$size_class = sanitize_html_class( $size );
-	$gallery_div = "<span id='$selector' class='gallery galleryid-{$id} gallery-columns-{$columns} gallery-size-{$size_class}'>";
+	$gallery_div = "<div id='$selector' class='gallery galleryid-{$id} gallery-columns-{$columns} gallery-size-{$size_class}'>";
 	$output = apply_filters( 'gallery_style', $gallery_style . "\n\t\t" . $gallery_div );
 
 	$i = 0;
@@ -169,7 +203,7 @@ function wp_gallery($attr)
 	}
 
 	$output .= "
-		</span>\n";
+		</div><div style='clear:both;'></div>\n";
 	
 
 	return $output;
