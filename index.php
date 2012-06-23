@@ -29,7 +29,11 @@
 			<?php while ( have_posts() ) :the_post(); ?>
 			<?php $count++; ?>
 			<div class="post row-fluid" >
-				<?php if($count % 2 == 1) { ?><img class="post-image span5" src="<?php echo full_image_url($id); ?>"><?php } ?>
+				<?php if($count % 2 == 1) { ?>
+				<a class="post-image span5" href="<?php echo get_permalink($id); ?>">
+					<img class="post-image-inner" src="<?php echo full_image_url($id); ?>">
+				</a>
+				<?php } ?>
 				<div class="post-info span7">
 					<div class="post-title"><a href="<?php echo get_permalink($id); ?>"><?php the_title(); ?></a></div>
 					<div class="post-date"><?php echo get_the_date('l, F j, Y'); ?></div>
@@ -54,7 +58,11 @@
 						?>
 					</div><!-- .post-categories -->
 				</div><!-- .post-info -->
-				<?php if($count % 2 == 0) { ?><img class="post-image span5" src="<?php echo full_image_url($id); ?>"> <?php } ?>
+				<?php if($count % 2 == 0) { ?>
+				<a class="post-image span5" href="<?php echo get_permalink($id); ?>">
+					<img class="post-image-inner" src="<?php echo full_image_url($id); ?>">
+				</a>
+				<?php } ?>
 			</div><!-- .post -->
 			<?php endwhile; ?>
     </div><!-- #content -->

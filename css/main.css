@@ -53,6 +53,18 @@ body
 	margin: 0;
 }
 
+.post-image-inner
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.post-image:last-child
+{
+	float: right;
+}
+
 #blog-title,
 #blog-title a
 {
